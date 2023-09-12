@@ -1,11 +1,20 @@
 
 def count_batteries_by_health(present_capacities):
-  return {
+  counts= {
     "healthy": 0,
     "exchange": 0,
     "failed": 0
   }
+  for capacity in present_capacities:
+        soh = (capacity / 120) * 100
+        if soh > 80:
+            counts["healthy"] += 1
+        elif soh > 63:
+            counts["exchange"] += 1
+        else:
+            counts["failed"] += 1
 
+  return counts
 
 def test_bucketing_by_health():
   print("Counting batteries by SoH...\n")
@@ -14,6 +23,7 @@ def test_bucketing_by_health():
   assert(counts["healthy"] == 2)
   assert(counts["exchange"] == 3)
   assert(counts["failed"] == 1)
+  print(counts)
   print("Done counting :)")
 
 
